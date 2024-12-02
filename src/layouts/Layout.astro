@@ -1,22 +1,49 @@
+---
+import "@/styles/globals.css";
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro Basics</title>
+  </head>
+  <body class="max-w-dvh min-h-dvh bg-red-950 text-red-50 dark">
+    <div
+      aria-hidden="true"
+      class="mx-auto -z-20 absolute aspect-square rounded-full blur-[100px] -translate-y-2/3 bg-red-500/50 bottom-1/2 inset-0 max-w-5xl w-[65%]"
+    >
+    </div>
+    <div>
+      <svg
+        astro-icon="galaxy/grid-lg"
+        viewBox="0 0 1800 1000"
+        aria-hidden="true"
+        preserveAspectRatio="xMinYMin slice"
+        class="w-full relative max-h-dvh h-full dark:text-base-500 -z-10 object-cover opacity-10 text-base-400/70"
+        ><g
+          fill-rule="evenodd"
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="1"
+          ><path
+            d="M100 1000V0M200 0v1000M300 1000V0M400 0v1000M500 1000V0M600 0v1000M700 1000V0M800 0v1000M900 1000V0M1000 0v1000M1100 1000V0M1200 0v1000M1300 1000V0M1400 0v1000M1500 1000V0M1600 0v1000M1700 1000V0M2.009 899.491H1797.99M1797.991 799.637H2.01M2.009 699.782H1797.99M1797.991 599.927H2.01M2.009 500.073H1797.99M1797.991 400.218H2.01M2.009 300.363H1797.99M1797.991 200.509H2.01M1797.991 100H2.01"
+          ></path></g
+        ></svg
+      >
+    </div>
+    <div
+      class="absolute inset-0 bg-gradient-to-b from-transparent via-background to-background -z-10"
+    >
+    </div>
+    <main
+      class="absolute inset-0 z-0 *:mx-auto *:py-16 *:max-w-screen-sm overflow-auto"
+    >
+      <slot />
+    </main>
+  </body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

@@ -1,0 +1,46 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+
+const blogEntries = await getCollection("database");
+
+export const getStaticPaths = async () => {
+  const blogEntries = await getCollection("database");
+  return blogEntries.map((entry) => ({
+    params: {
+      slug: entry.data.properties.Slug.rich_text[0].plain_text.replaceAll(
+        '"',
+        ""
+      ),
+    },
+  }));
+};
+
+const { slug } = Astro.params;
+
+const blog = blogEntries.filter(
+  (entry) =>
+    entry.data.properties.Slug.rich_text[0].plain_text.replaceAll('"', "") ===
+    slug
+)[0];
+
+if (!slug || !blog || !blog.rendered?.html) return Astro.redirect("/404");
+
+const title = blog.data.properties.Name.title.reduce(
+  (acc, curr) => acc + curr.plain_text,
+  ""
+);
+const content = blog.rendered.html;
+---
+
+<Layout>
+  <section>
+    <div class="pb-12">
+      <h1 class="text-4xl font-bold text-red-500">{title}</h1>
+    </div>
+    <div
+      class="prose text-red-50 prose-headings:text-red-50 prose-pre:bg-background prose-pre:border"
+      set:html={content}
+    />
+  </section>
+</Layout>
