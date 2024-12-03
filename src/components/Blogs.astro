@@ -20,7 +20,7 @@ const blogs = await getCollection("database");
     <ScrollArea>
       <div class="space-y-8">
         {
-          blogs.map((blog) => {
+          blogs.map((blog: any) => {
             const slug =
               blog.data.properties.Slug.rich_text[0].plain_text.replaceAll(
                 '"',

@@ -9,7 +9,7 @@
   "scripts": {
     "astro": "astro",
     "build": "astro check && astro build",
-    "dev": "astro dev",
+    "dev": "astro dev && astro check --watch",
     "preview": "astro preview"
   },
   "dependencies": {

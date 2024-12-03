@@ -2,12 +2,13 @@
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import type { SEOProps } from "astro-seo";
+import { Image } from "astro:assets";
 
 const blogs = await getCollection("database");
 
 export const getStaticPaths = async () => {
   const blogs = await getCollection("database");
-  return blogs.map((blog) => ({
+  return blogs.map((blog: any) => ({
     params: {
       slug: blog.data.properties.Slug.rich_text[0].plain_text.replaceAll(
         '"',
@@ -20,7 +21,7 @@ export const getStaticPaths = async () => {
 const { slug } = Astro.params;
 
 const blog = blogs.filter(
-  (blog) =>
+  (blog: any) =>
     blog.data.properties.Slug.rich_text[0].plain_text.replaceAll('"', "") ===
     slug
 )[0];
@@ -28,7 +29,7 @@ const blog = blogs.filter(
 if (!slug || !blog || !blog.rendered?.html) return Astro.redirect("/404");
 
 const title = blog.data.properties.Name.title.reduce(
-  (acc: string, curr) => acc + curr.plain_text,
+  (acc: string, curr: any) => acc + curr.plain_text,
   ""
 );
 const description = blog.data.properties.Description.rich_text[0]?.plain_text;
@@ -60,6 +61,18 @@ const SEO: SEOProps = {
   <section>
     <div class="pb-12">
       <h1 class="text-4xl font-bold text-red-500">{title}</h1>
+      <div class="min-h-[426.66px] my-8 rounded-2xl overflow-hidden">
+        <Image
+          src={image}
+          alt={title + "image"}
+          height={120}
+          width={640}
+          quality={"low"}
+          format="avif"
+          loading="lazy"
+          class="rounded-2xl"
+        />
+      </div>
     </div>
     <div
       class="prose text-red-50 prose-headings:text-red-50 prose-pre:bg-background prose-pre:border"

@@ -21,4 +21,7 @@ export default defineConfig({
   experimental: {
     contentLayer: true,
   },
+  image: {
+    domains: ["https://images.unsplash.com"],
+  },
 });
