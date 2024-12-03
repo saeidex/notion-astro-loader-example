@@ -6,45 +6,44 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getCollection } from "astro:content";
-import ScrollArea from "@/components/ScrollArea";
 
 const blogs = await getCollection("database");
 ---
 
 <section class="text-red-100 max-h-dvh grid grid-rows-[auto_1fr] gap-12">
-  <div class="pl-1">
+  <div class="pl-9">
     <h1 class="text-7xl text-red-500 font-medium">Blogs</h1>
     <p class="pl-2 py-1 text-xl">astro + notion</p>
   </div>
-  <div class="overflow-y-scroll">
-    <ScrollArea>
-      <div class="space-y-8">
-        {
-          blogs.map((blog: any) => {
-            const slug =
-              blog.data.properties.Slug.rich_text[0].plain_text.replaceAll(
-                '"',
-                ""
-              );
-            const title = blog.data.properties.Name.title[0].plain_text;
-            const description =
-              blog.data.properties.Description?.rich_text[0].plain_text;
-
-            return (
-              <Card className="bg-card/30 backdrop-blur-2xl max-w-screen-sm">
-                <CardHeader>
-                  <a href={slug}>
-                    <CardTitle>{title}</CardTitle>
-                  </a>
-                  <CardDescription className="line-clamp-5">
-                    {description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
+  <div
+    class="overflow-y-scroll px-8 scrollbar-track-transparent scrollbar-corner-transparent scroll-smooth scollbar scrollbar-thin scrollbar-thumb-red-900 scrollbar-thumb-rounded-full"
+  >
+    <div class="space-y-8">
+      {
+        blogs.map((blog: any) => {
+          const slug =
+            blog.data.properties.Slug.rich_text[0].plain_text.replaceAll(
+              '"',
+              ""
             );
-          })
-        }
-      </div>
-    </ScrollArea>
+          const title = blog.data.properties.Name.title[0].plain_text;
+          const description =
+            blog.data.properties.Description?.rich_text[0].plain_text;
+
+          return (
+            <Card className="bg-card/30 backdrop-blur-2xl max-w-screen-sm">
+              <CardHeader>
+                <a href={slug}>
+                  <CardTitle>{title}</CardTitle>
+                </a>
+                <CardDescription className="line-clamp-5">
+                  {description}
+                </CardDescription>
+              </CardHeader>
+            </Card>
+          );
+        })
+      }
+    </div>
   </div>
 </section>
