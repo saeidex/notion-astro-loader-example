@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://notion-astro-loader-example.pages.dev/sitemap-index.xml

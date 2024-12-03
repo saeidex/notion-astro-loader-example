@@ -1,16 +1,31 @@
 ---
 import "@/styles/globals.css";
+import { Head } from "astro-capo";
+import { SEO as SEOComponent, type SEOProps } from "astro-seo";
+
+interface Props {
+  SEO?: SEOProps;
+}
+
+const { SEO } = Astro.props;
+
+const defaultSEO: SEOProps = {
+  titleDefault: "Blogs with astro & notion",
+  description:
+    "Presenting notion as a headless cms with the brand new notion-astro-loader plugin.",
+};
 ---
 
 <!doctype html>
 <html lang="en">
-  <head>
+  <Head>
+    <SEOComponent {...defaultSEO} {...SEO} />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
-  </head>
+  </Head>
   <body class="max-w-dvh min-h-dvh bg-red-950 text-red-50 dark">
     <div
       aria-hidden="true"

@@ -1,14 +1,15 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
+import type { SEOProps } from "astro-seo";
 
-const blogEntries = await getCollection("database");
+const blogs = await getCollection("database");
 
 export const getStaticPaths = async () => {
-  const blogEntries = await getCollection("database");
-  return blogEntries.map((entry) => ({
+  const blogs = await getCollection("database");
+  return blogs.map((blog) => ({
     params: {
-      slug: entry.data.properties.Slug.rich_text[0].plain_text.replaceAll(
+      slug: blog.data.properties.Slug.rich_text[0].plain_text.replaceAll(
         '"',
         ""
       ),
@@ -18,22 +19,44 @@ export const getStaticPaths = async () => {
 
 const { slug } = Astro.params;
 
-const blog = blogEntries.filter(
-  (entry) =>
-    entry.data.properties.Slug.rich_text[0].plain_text.replaceAll('"', "") ===
+const blog = blogs.filter(
+  (blog) =>
+    blog.data.properties.Slug.rich_text[0].plain_text.replaceAll('"', "") ===
     slug
 )[0];
 
 if (!slug || !blog || !blog.rendered?.html) return Astro.redirect("/404");
 
 const title = blog.data.properties.Name.title.reduce(
-  (acc, curr) => acc + curr.plain_text,
+  (acc: string, curr) => acc + curr.plain_text,
   ""
 );
+const description = blog.data.properties.Description.rich_text[0]?.plain_text;
 const content = blog.rendered.html;
+const image =
+  blog.data.cover?.type === "external" ? blog.data.cover.external.url : "";
+
+const SEO: SEOProps = {
+  title,
+  description,
+  openGraph: {
+    basic: {
+      title,
+      image,
+      url: Astro.url,
+      type: "article",
+    },
+  },
+  twitter: {
+    site: Astro.site?.toString(),
+    title,
+    description,
+    image,
+  },
+};
 ---
 
-<Layout>
+<Layout {...SEO}>
   <section>
     <div class="pb-12">
       <h1 class="text-4xl font-bold text-red-500">{title}</h1>
